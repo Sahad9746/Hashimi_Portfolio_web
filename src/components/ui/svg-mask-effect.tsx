@@ -60,24 +60,24 @@ export const MaskContainer = ({
       </div>
 
       {/* Masked revealed text */}
-      <motion.div
+      <div
         ref={maskRef}
         className="absolute inset-0 flex h-full w-full items-center justify-center bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
-        initial={{ "--mask-size": `${size}px` } as any}
-        animate={{ "--mask-size": `${maskSize}px` } as any}
-        transition={{ duration: 0.3, ease: "easeOut" }}
         style={{
-          WebkitMaskSize: "var(--mask-size)",
-          maskSize: "var(--mask-size)",
-          WebkitMaskPosition: "calc(var(--mouse-x, 0px) - var(--mask-size) / 2) calc(var(--mouse-y, 0px) - var(--mask-size) / 2)",
-          maskPosition: "calc(var(--mouse-x, 0px) - var(--mask-size) / 2) calc(var(--mouse-y, 0px) - var(--mask-size) / 2)",
+          visibility: isHovered ? "visible" : "hidden",
+          WebkitMaskSize: `${maskSize}px`,
+          maskSize: `${maskSize}px`,
+          WebkitMaskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",
+          maskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",
+          "--mask-size": `${maskSize}px`,
+          transition: "mask-size 0.3s ease-out, -webkit-mask-size 0.3s ease-out",
           pointerEvents: "none"
         } as any}
       >
         <div className="relative z-20 flex w-full h-full items-center justify-center">
           {children}
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitText from "@/components/SplitText";
@@ -9,6 +9,7 @@ import SplitType from "split-type";
 import InteractiveTicker from "@/components/InteractiveTicker";
 import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import AboutReveal from "@/components/AboutReveal";
+import TextFillReveal from "@/components/TextFillReveal";
 
 const projects = [
   { title: "ARCHETYPES", category: "BRAND IDENTITY", year: "2024", img: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1000&auto=format&fit=crop" },
@@ -18,6 +19,7 @@ const projects = [
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
+  const [hoveredServiceIndex, setHoveredServiceIndex] = useState<number | null>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -81,7 +83,7 @@ export default function Home() {
             revealSize={350}
             revealText={
               <div className="flex flex-col items-center">
-                <span className="font-sans text-xs uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
+                <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
                   Hashim
                 </span>
                 <h1 className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[9.05rem] text-[#AEA28F]">
@@ -96,7 +98,7 @@ export default function Home() {
           >
             {/* What is revealed inside the mask */}
             <div className="flex flex-col items-center">
-              <span className="font-sans text-xs uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
+              <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
                 Hashim
               </span>
               <h1 className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[9.05rem] text-black">
@@ -118,10 +120,66 @@ export default function Home() {
       {/* About Section — scroll-reveal text */}
       <AboutReveal />
 
-      {/* Interactive Skills Ticker Section */}
-      <div className="-mx-4 md:-mx-8">
-        <InteractiveTicker />
-      </div>
+      {/* What I Do Section */}
+      <section className="my-32 md:my-48 overflow-hidden w-full">
+        <div className="max-w-[1300px] mx-auto w-full px-4 md:px-8 lg:px-16">
+          <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F]/50 block mb-12">
+            What I do
+          </span>
+        </div>
+        <div className="flex flex-col w-full">
+          {[
+            { title: "3D", alt: "I can produce anything that my 16\" laptop can render" },
+            { title: "VISUAL", alt: "Making things pretty since dial-up internet" },
+            { title: "MOTION", alt: "Moving pixels so you don't have to" },
+            { title: "PRODUCT", alt: "I click buttons professionally" },
+            { title: "TUTORIAL", alt: "Teaching what I barely learned yesterday" },
+          ].map((item, i) => (
+            <div key={i} className="relative border-t border-[#333]/60 w-full last:border-b overflow-hidden">
+              {/* Full-width background bar — opens from the middle vertically with a slight delay */}
+              <div 
+                className={`absolute inset-0 bg-[#7d0c1a] transition-all duration-500 delay-100 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center pointer-events-none ${
+                  hoveredServiceIndex === i ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
+                }`}
+              />
+
+              <div className="max-w-[1300px] mx-auto w-full px-4 md:px-8 lg:px-16 flex items-end justify-between py-[2px] relative z-10">
+                <div 
+                  className="relative cursor-pointer"
+                  onMouseEnter={() => setHoveredServiceIndex(i)}
+                  onMouseLeave={() => setHoveredServiceIndex(null)}
+                >
+                  <TextFillReveal
+                    start="top 90%"
+                    end="top 50%"
+                    stagger={0.03}
+                    darkColor="#333"
+                    forceColor={hoveredServiceIndex === i ? "black" : undefined}
+                  >
+                    <h2 
+                      className={`font-sans font-bold leading-[0.85] tracking-tighter uppercase transition-colors duration-300 delay-100 ${
+                        hoveredServiceIndex === i ? "text-black" : "text-[#AEA28F]"
+                      }`} 
+                      style={{ fontSize: "clamp(3rem, 7vw, 7rem)" }}
+                    >
+                      {item.title}
+                    </h2>
+                  </TextFillReveal>
+                </div>
+
+                {/* Alt text — appears ONLY when the title is hovered */}
+                <span 
+                  className={`font-sans text-[1rem] tracking-normal pb-4 md:pb-8 max-w-[400px] text-right hidden md:block transition-all duration-300 delay-100 pointer-events-none select-none ${
+                    hoveredServiceIndex === i ? "opacity-100 !text-black" : "opacity-0 text-[#AEA28F]/60"
+                  }`}
+                >
+                  {item.alt}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Experience / History Section */}
       <section className="my-32 md:my-48">
