@@ -10,6 +10,7 @@ import InteractiveTicker from "@/components/InteractiveTicker";
 import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import AboutReveal from "@/components/AboutReveal";
 import TextFillReveal from "@/components/TextFillReveal";
+import ExperienceReveal from "@/components/ExperienceReveal";
 
 const projects = [
   { title: "ARCHETYPES", category: "BRAND IDENTITY", year: "2024", img: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1000&auto=format&fit=crop" },
@@ -180,6 +181,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <ExperienceReveal />
 
       {/* Experience / History Section */}
       <section className="my-32 md:my-48">

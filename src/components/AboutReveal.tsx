@@ -14,11 +14,13 @@ export default function AboutReveal() {
   const xRayRef = useRef<HTMLDivElement>(null);
 
   const [isHovered, setIsHovered] = useState(false);
+  const [isWithinSection, setIsWithinSection] = useState(false);
 
   const revealSize = 450;
-  const maskSize = isHovered ? revealSize : 0;
+  const idleSize = 40;
+  const maskSize = isHovered ? revealSize : idleSize;
 
-  // Track mouse using CSS variables to prevent React re-renders and fix the mask center logic
+  // Track mouse using CSS variables
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -28,7 +30,6 @@ export default function AboutReveal() {
       const rect = section.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      // Inject mouse coordinates directly into the x-ray container
       xRayRef.current.style.setProperty("--mouse-x", `${x}px`);
       xRayRef.current.style.setProperty("--mouse-y", `${y}px`);
     };
@@ -48,6 +49,8 @@ export default function AboutReveal() {
       ref={sectionRef}
       id="about"
       className="relative w-full min-h-screen flex items-center justify-center bg-[#111]"
+      onMouseEnter={() => setIsWithinSection(true)}
+      onMouseLeave={() => setIsWithinSection(false)}
     >
       {/* Normal Text Layer — Trigger hover here with 5px padding */}
       <div
@@ -78,13 +81,14 @@ export default function AboutReveal() {
         ref={xRayRef}
         className="absolute inset-0 flex items-center justify-center bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
         style={{
-          visibility: isHovered ? "visible" : "hidden",
+          visibility: isWithinSection ? "visible" : "hidden",
+          opacity: isWithinSection ? 1 : 0,
           WebkitMaskSize: `${maskSize}px`,
           maskSize: `${maskSize}px`,
           WebkitMaskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",
           maskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",
           "--mask-size": `${maskSize}px`,
-          transition: "mask-size 0.3s ease-out, -webkit-mask-size 0.3s ease-out",
+          transition: "mask-size 0.3s ease-out, -webkit-mask-size 0.3s ease-out, opacity 0.3s ease-out",
           pointerEvents: "none",
         } as any}
       >
