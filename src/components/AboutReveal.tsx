@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitType from "split-type";
-import { motion } from "motion/react";
 import TextFillReveal from "./TextFillReveal";
 
 export default function AboutReveal() {

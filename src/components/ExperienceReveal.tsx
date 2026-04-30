@@ -35,16 +35,16 @@ export default function ExperienceReveal() {
     "I've spent a minute or two playing with rectangles and convincing people that pixels actually matter.";
 
   return (
-    <section
+    <div
       ref={sectionRef}
       id="experience-reveal"
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-[#111]"
+      className="relative w-full h-[150vh] flex items-center justify-center pointer-events-none"
       onMouseEnter={() => setIsWithinSection(true)}
       onMouseLeave={() => setIsWithinSection(false)}
     >
       {/* Normal Text Layer — Trigger hover here with 5px padding */}
       <div
-        className="relative z-10 max-w-[1300px] w-full px-4 md:px-8 lg:px-16"
+        className="relative z-10 max-w-[1300px] w-full px-4 md:px-8 lg:px-16 pointer-events-auto"
         style={{ padding: "5px" }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -87,6 +87,6 @@ export default function ExperienceReveal() {
           </p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
