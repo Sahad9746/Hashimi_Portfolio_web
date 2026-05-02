@@ -2,9 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { usePathname } from "next/navigation";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  // Disable custom cursor completely on Sanity Studio route
+  if (pathname?.startsWith("/studio")) return null;
 
   useEffect(() => {
     const cursor = cursorRef.current;
