@@ -6,38 +6,36 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import TextFillReveal from "./TextFillReveal";
 
-const testimonials = [
-  {
-    quote:
-      "Tube is seriously the best and he never complains. Every frame he delivers is intentional, every edit feels alive.",
-    name: "SARAH CHEN",
-    designation: "CREATIVE DIRECTOR",
-    company: "STUDIO NOIR",
-    avatar: "/assets/dp1.jpg",
-  },
-  {
-    quote:
-      "Working with Tube changed how I think about visual storytelling. He doesn't just shoot — he sculpts light.",
-    name: "JAMES OKAFOR",
-    designation: "FOUNDER",
-    company: "OKAFOR FILMS",
-    avatar: "/assets/dp2.jpg",
-  },
-  {
-    quote:
-      "The motion work he delivered was beyond what we imagined. Clients keep asking who made it. The answer is always Tube.",
-    name: "PRIYA MEHTA",
-    designation: "HEAD OF CONTENT",
-    company: "WAVELENGTH MEDIA",
-    avatar: "/assets/dp3.jpg",
-  },
-];
-
-export default function TestimonialsReveal() {
+export default function TestimonialsReveal({ testimonials: sanityTestimonials }: { testimonials?: any[] }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const testimonialsStartRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCircles, setShowCircles] = useState(false);
+
+  // Fallback if DB is empty
+  const testimonials = sanityTestimonials?.length ? sanityTestimonials : [
+    {
+      quote: "Tube is seriously the best and he never complains. Every frame he delivers is intentional, every edit feels alive.",
+      name: "SARAH CHEN",
+      designation: "CREATIVE DIRECTOR",
+      company: "STUDIO NOIR",
+      avatarUrl: "/assets/dp1.jpg",
+    },
+    {
+      quote: "Working with Tube changed how I think about visual storytelling. He doesn't just shoot — he sculpts light.",
+      name: "JAMES OKAFOR",
+      designation: "FOUNDER",
+      company: "OKAFOR FILMS",
+      avatarUrl: "/assets/dp2.jpg",
+    },
+    {
+      quote: "The motion work he delivered was beyond what we imagined. Clients keep asking who made it. The answer is always Tube.",
+      name: "PRIYA MEHTA",
+      designation: "HEAD OF CONTENT",
+      company: "WAVELENGTH MEDIA",
+      avatarUrl: "/assets/dp3.jpg",
+    },
+  ];
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -149,7 +147,7 @@ export default function TestimonialsReveal() {
               }}
             >
               <Image
-                src={t.avatar}
+                src={t.avatarUrl}
                 alt={t.name}
                 fill
                 className="object-cover"

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import TextFillReveal from "./TextFillReveal";
 
-export default function ExperienceReveal() {
+export default function ExperienceReveal({ globalConfig }: { globalConfig?: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const xRayRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +58,13 @@ export default function ExperienceReveal() {
             className="font-sans font-bold leading-[1.05] tracking-tight text-[#AEA28F]"
             style={{ fontSize: "clamp(2rem, 8vw, 6rem)" }}
           >
-            Over <span className="text-[#7d0c1a]">a decade</span> of experience in interactive design and working with some of the most talented people in the business
+            {globalConfig?.experienceText ? (
+              globalConfig.experienceText.split('*').map((part: string, index: number) => 
+                index % 2 === 1 ? <span key={index} className="text-[#7d0c1a]">{part}</span> : part
+              )
+            ) : (
+              <>Over <span className="text-[#7d0c1a]">a decade</span> of experience in interactive design and working with some of the most talented people in the business</>
+            )}
           </p>
         </TextFillReveal>
       </div>

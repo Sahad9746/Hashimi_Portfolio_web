@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextFillReveal from "./TextFillReveal";
 
-export default function AboutReveal() {
+export default function AboutReveal({ globalConfig }: { globalConfig?: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const textWrapperRef = useRef<HTMLDivElement>(null);
@@ -13,6 +13,11 @@ export default function AboutReveal() {
 
   const [isHovered, setIsHovered] = useState(false);
   const [isWithinSection, setIsWithinSection] = useState(false);
+
+  const rawText = globalConfig?.aboutText || "I'M A CREATIVE WHO THRIVES IN THE *CHAOS* OF PRODUCTION. WHETHER IT'S CAPTURING RAW EMOTION THROUGH A LENS OR STITCHING SCENES TOGETHER IN POST, I DON'T JUST TELL STORIES—I *ENGINEER* THEM.";
+  
+  // Parse text to identify red words based on asterisks
+  const parts = rawText.split('*');
 
   const revealSize = 450;
   const idleSize = 40;

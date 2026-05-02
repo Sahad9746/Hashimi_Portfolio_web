@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Play, Pause, X } from "lucide-react";
 
-export default function ProjectReveal() {
+export default function ProjectReveal({ projects }: { projects?: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -15,6 +15,10 @@ export default function ProjectReveal() {
   const [modalPlaying, setModalPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
+
+  // Use the first active project, or fallback
+  const firstProject = projects?.[0];
+  const videoSrc = firstProject?.videoFileUrl || firstProject?.videoUrl || "/assets/linde-event-day01.mp4";
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -90,7 +94,7 @@ export default function ProjectReveal() {
       >
         <video
           ref={videoRef}
-          src="/assets/linde-event-day01.mp4"
+          src={videoSrc}
           className="absolute inset-0 w-full h-full object-cover"
           playsInline
           autoPlay
@@ -104,7 +108,7 @@ export default function ProjectReveal() {
         <div className="fixed inset-0 z-50 bg-[#050505] flex items-center justify-center">
           <video
             ref={modalVideoRef}
-            src="/assets/linde-event-day01.mp4"
+            src={videoSrc}
             className="w-full h-full object-contain"
             playsInline
             autoPlay

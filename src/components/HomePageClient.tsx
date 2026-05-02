@@ -13,75 +13,55 @@ import TestimonialsReveal from "@/components/TestimonialsReveal";
 import MottoReveal from "@/components/MottoReveal";
 
 
-export default function Home() {
+export default function HomePageClient({ hero, services, projects, testimonials, globalConfig }: any) {
   const container = useRef<HTMLDivElement>(null);
   const [hoveredServiceIndex, setHoveredServiceIndex] = useState<number | null>(null);
+
+  // Fallbacks for empty database
+  const safeServices = services?.length > 0 ? services : [
+    { title: "CINEMATOGRAPHY", description: "I SHOOT UNPLANNED CHAOS LIKE IT'S PLANNED AND FIX IT MID-ROLL." },
+    { title: "EDITING", description: "IF 'FIX IT IN POST' WERE A PERSON, THAT WOULD BE ME" },
+    { title: "MOTION", description: "USE FANCY MOTION THAT MAKES MY DESIGN MORE INTERESTING THAT IT ACTUALLY IS" },
+  ];
+
+  const heroTopLabel = hero?.topLabel || "HASHMI";
+  const heroBottomLabel = hero?.bottomLabel || "CINEMATOGRAPHER | EDITOR";
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
       // 1. Background Switching Logic
-      // When we hit the Experience section, fade from BG1 to BG2
       gsap.to("#bg-hero", {
-        scrollTrigger: {
-          trigger: "#experience-trigger",
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
-        },
+        scrollTrigger: { trigger: "#experience-trigger", start: "top 80%", end: "top 20%", scrub: true },
         opacity: 0,
       });
 
       gsap.to("#bg-experience", {
-        scrollTrigger: {
-          trigger: "#experience-trigger",
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
-        },
+        scrollTrigger: { trigger: "#experience-trigger", start: "top 80%", end: "top 20%", scrub: true },
         opacity: 1,
       });
 
-      // When we hit the Motto section, fade from BG2 to BG3
       gsap.to("#bg-experience", {
-        scrollTrigger: {
-          trigger: "#motto-trigger",
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
-        },
+        scrollTrigger: { trigger: "#motto-trigger", start: "top 80%", end: "top 20%", scrub: true },
         opacity: 0,
       });
 
       gsap.to("#bg-motto", {
-        scrollTrigger: {
-          trigger: "#motto-trigger",
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
-        },
+        scrollTrigger: { trigger: "#motto-trigger", start: "top 80%", end: "top 20%", scrub: true },
         opacity: 1,
       });
 
       // Line separators animation
       gsap.utils.toArray<HTMLElement>(".separator").forEach((el) => {
         gsap.from(el, {
-          scrollTrigger: {
-            trigger: el,
-            start: "top 90%",
-          },
-          scaleX: 0,
-          transformOrigin: "left center",
-          duration: 1,
-          ease: "power3.inOut",
+          scrollTrigger: { trigger: el, start: "top 90%" },
+          scaleX: 0, transformOrigin: "left center", duration: 1, ease: "power3.inOut",
         });
       });
     }, container);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -89,44 +69,21 @@ export default function Home() {
 
       {/* FIXED BACKGROUND STACK */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Background 1: Hero */}
         <div id="bg-hero" className="absolute inset-0 transition-opacity">
-          <Image
-            src="/assets/dp1.jpg"
-            alt="Hero Background"
-            fill
-            className="object-cover grayscale opacity-60"
-            priority
-          />
+          <Image src="/assets/dp1.jpg" alt="Hero Background" fill className="object-cover grayscale opacity-60" priority />
           <div className="absolute inset-0 bg-[#111]/40 mix-blend-multiply" />
         </div>
-
-        {/* Background 2: Experience */}
         <div id="bg-experience" className="absolute inset-0 opacity-0 transition-opacity">
-          <Image
-            src="/assets/dp2.jpg"
-            alt="Experience Background"
-            fill
-            className="object-cover grayscale opacity-60"
-          />
+          <Image src="/assets/dp2.jpg" alt="Experience Background" fill className="object-cover grayscale opacity-60" />
           <div className="absolute inset-0 bg-[#111]/40 mix-blend-multiply" />
         </div>
-
-        {/* Background 3: Motto */}
         <div id="bg-motto" className="absolute inset-0 opacity-0 transition-opacity">
-          <Image
-            src="/assets/dp3.jpg"
-            alt="Motto Background"
-            fill
-            className="object-cover grayscale opacity-60"
-          />
+          <Image src="/assets/dp3.jpg" alt="Motto Background" fill className="object-cover grayscale opacity-60" />
           <div className="absolute inset-0 bg-[#111]/40 mix-blend-multiply" />
         </div>
       </div>
 
-      {/* CONTENT LAYERS */}
-
-      {/* Layer 1: Hero Content (Transparent Background) */}
+      {/* Layer 1: Hero Content */}
       <div className="relative w-full h-screen z-10 flex flex-col justify-center items-center">
         <MaskContainer
           size={40}
@@ -134,40 +91,44 @@ export default function Home() {
           revealText={
             <div className="flex flex-col items-center justify-center h-full">
               <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
-                HASHMI
+                {heroTopLabel}
               </span>
-              <h1 
-                className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[#AEA28F]"
-                style={{ fontSize: "clamp(3.5rem, 12vw, 9.05rem)" }}
-              >
-                MAKING<br />
-                <span className="text-[#7d0c1a]">GOOD</span><br />
-                <span className="text-[#7d0c1a]">SHIT</span><br />
-                SINCE<br />
-                2022
+              <h1 className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[#AEA28F]" style={{ fontSize: "clamp(3.5rem, 12vw, 9.05rem)" }}>
+                {hero?.headingLines ? (
+                  hero.headingLines.map((line: string, i: number) => (
+                    <span key={i}>
+                      {line.split('*').map((part, j) => j % 2 === 1 ? <span key={j} className="text-[#7d0c1a]">{part}</span> : part)}
+                      <br />
+                    </span>
+                  ))
+                ) : (
+                  <>MAKING<br /><span className="text-[#7d0c1a]">GOOD</span><br /><span className="text-[#7d0c1a]">SHIT</span><br />SINCE<br />2022</>
+                )}
               </h1>
               <span className="font-sans text-[0.9rem] uppercase tracking-[0.2em] font-medium text-[#AEA28F]/60 mt-12 text-center px-4">
-                CINEMATOGRAPHER | EDITOR
+                {heroBottomLabel}
               </span>
             </div>
           }
         >
           <div className="flex flex-col items-center justify-center h-full">
             <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
-              HASHMI
+              {heroTopLabel}
             </span>
-            <h1 
-              className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-black"
-              style={{ fontSize: "clamp(3.5rem, 12vw, 9.05rem)" }}
-            >
-              HIDING<br />
-              <span className="text-black">BAD</span><br />
-              <span className="text-black">SHIT</span><br />
-              SINCE<br />
-              2022
+            <h1 className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-black" style={{ fontSize: "clamp(3.5rem, 12vw, 9.05rem)" }}>
+              {hero?.hoverHeadingLines ? (
+                hero.hoverHeadingLines.map((line: string, i: number) => (
+                  <span key={i}>
+                    {line.split('*').map((part, j) => j % 2 === 1 ? <span key={j} className="text-black">{part}</span> : part)}
+                    <br />
+                  </span>
+                ))
+              ) : (
+                <>HIDING<br /><span className="text-black">BAD</span><br /><span className="text-black">SHIT</span><br />SINCE<br />2022</>
+              )}
             </h1>
             <span className="font-sans text-[0.9rem] uppercase tracking-[0.2em] font-medium text-black/60 mt-12 text-center px-4">
-              CINEMATOGRAPHER | EDITOR
+              {heroBottomLabel}
             </span>
           </div>
         </MaskContainer>
@@ -175,7 +136,7 @@ export default function Home() {
 
       {/* Layer 2: Solid Middle Section (Covers Hero BG, revealed Experience BG) */}
       <div className="relative z-20 bg-[#111] w-full pt-20">
-        <AboutReveal />
+        <AboutReveal globalConfig={globalConfig} />
 
         {/* What I Do Section */}
         <section className="my-16 md:my-24 overflow-hidden w-full">
@@ -185,11 +146,7 @@ export default function Home() {
             </span>
           </div>
           <div className="flex flex-col w-full">
-            {[
-              { title: "CINEMATOGRAPHY", alt: "I SHOOT UNPLANNED CHAOS LIKE IT'S PLANNED AND FIX IT MID-ROLL." },
-              { title: "EDITING", alt: "IF 'FIX IT IN POST' WERE A PERSON, THAT WOULD BE ME" },
-              { title: "MOTION", alt: "USE FANCY MOTION THAT MAKES MY DESIGN MORE INTERESTING THAT IT ACTUALLY IS" },
-            ].map((item, i) => (
+            {safeServices.map((item: any, i: number) => (
               <div key={i} className="relative border-t border-[#AEA28F]/10 w-full last:border-b overflow-hidden">
                 <div 
                   className={`absolute inset-0 bg-[#7d0c1a] transition-all duration-500 delay-100 ease-[cubic-bezier(0.25,1,0.5,1)] origin-center pointer-events-none ${
@@ -226,7 +183,7 @@ export default function Home() {
                       hoveredServiceIndex === i ? "opacity-100 !text-black" : "opacity-0 text-[#AEA28F]/60"
                     }`}
                   >
-                    {item.alt}
+                    {item.description}
                   </span>
                 </div>
               </div>
@@ -240,18 +197,18 @@ export default function Home() {
 
       {/* Layer 3: Experience Content (Transparent Background, reveals BG 2) */}
       <div id="experience-trigger" className="relative z-10 w-full min-h-screen">
-        <ExperienceReveal />
+        <ExperienceReveal globalConfig={globalConfig} />
       </div>
 
       {/* NEW LAYER: Project Section */}
-      <ProjectReveal />
+      <ProjectReveal projects={projects} />
 
       {/* Testimonials Section */}
-      <TestimonialsReveal />
+      <TestimonialsReveal testimonials={testimonials} />
 
       {/* NEW LAYER: Motto Section (Transparent Background, reveals BG 3) */}
       <div id="motto-trigger" className="relative z-10 w-full min-h-screen flex items-center justify-center">
-        <MottoReveal />
+        <MottoReveal globalConfig={globalConfig} />
       </div>
 
       {/* Layer 4: Solid Bottom Section (Covers Motto BG) */}
@@ -262,14 +219,19 @@ export default function Home() {
             CONNECT
           </h2>
           <div className="flex flex-col items-center">
-            {["mail", "linkedin", "Instagram", "phone"].map((item) => (
+            {(globalConfig?.socialLinks || [
+              { platform: "mail", url: "#" },
+              { platform: "linkedin", url: "#" },
+              { platform: "Instagram", url: "#" },
+              { platform: "phone", url: "#" }
+            ]).map((item: any) => (
               <a 
-                key={item} 
-                href="#" 
+                key={item.platform} 
+                href={item.url} 
                 className="font-sans font-medium tracking-normal text-[#dcd4c4] hover:text-[#7d0c1a] transition-colors leading-[1.05] md:leading-[1.1]"
                 style={{ fontSize: "clamp(2.5rem, 8vw, 6rem)" }}
               >
-                {item}
+                {item.platform}
               </a>
             ))}
           </div>

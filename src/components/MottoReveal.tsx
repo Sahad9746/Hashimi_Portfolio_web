@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import TextFillReveal from "./TextFillReveal";
 
-export default function MottoReveal() {
+export default function MottoReveal({ globalConfig }: { globalConfig?: any }) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -24,13 +24,21 @@ export default function MottoReveal() {
             className="font-sans font-bold leading-[1.0] tracking-tighter text-[#AEA28F] uppercase"
             style={{ fontSize: "clamp(2.5rem, 10vw, 7.5rem)" }}
           >
-            FILM IS A<br />
-            BATTLEGROUND
+            {globalConfig?.mottoLines ? (
+              globalConfig.mottoLines.map((line: string, i: number) => (
+                <span key={i}>
+                  {line}
+                  {i < globalConfig.mottoLines.length - 1 && <br />}
+                </span>
+              ))
+            ) : (
+              <>FILM IS A<br />BATTLEGROUND</>
+            )}
           </p>
         </TextFillReveal>
 
         <span className="font-sans text-[1.2rem] uppercase font-medium text-[#AEA28F]/50 block mt-4 md:mt-6 tracking-normal">
-          SAM FULLER
+          {globalConfig?.mottoAuthor || "SAM FULLER"}
         </span>
       </div>
     </div>
