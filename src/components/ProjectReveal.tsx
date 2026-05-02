@@ -90,7 +90,7 @@ export default function ProjectReveal() {
       >
         <video
           ref={videoRef}
-          src="https://videos.pexels.com/video-files/3121459/3121459-uhd_2560_1440_24fps.mp4"
+          src="/assets/linde-event-day01.mp4"
           className="absolute inset-0 w-full h-full object-cover"
           playsInline
           autoPlay
@@ -104,7 +104,7 @@ export default function ProjectReveal() {
         <div className="fixed inset-0 z-50 bg-[#050505] flex items-center justify-center">
           <video
             ref={modalVideoRef}
-            src="https://videos.pexels.com/video-files/3121459/3121459-uhd_2560_1440_24fps.mp4"
+            src="/assets/linde-event-day01.mp4"
             className="w-full h-full object-contain"
             playsInline
             autoPlay
