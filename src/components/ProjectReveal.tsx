@@ -85,8 +85,7 @@ export default function ProjectReveal() {
     <section ref={containerRef} className="relative w-full h-screen bg-[#111] z-20 flex items-center justify-center overflow-hidden">
       <div 
         ref={videoContainerRef} 
-        className="relative overflow-hidden rounded-[40px] flex items-center justify-center bg-black/50 cursor-pointer"
-        style={{ width: "60vw", height: "60vh" }}
+        className="relative overflow-hidden rounded-[20px] md:rounded-[40px] flex items-center justify-center bg-black/50 cursor-pointer w-[90vw] md:w-[75vw] lg:w-[60vw] h-[50vh] md:h-[60vh]"
         onClick={openModal}
       >
         <video

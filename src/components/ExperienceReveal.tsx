@@ -55,7 +55,8 @@ export default function ExperienceReveal() {
         </span>
         <TextFillReveal>
           <p
-            className="text-[2.5rem] md:text-[5rem] lg:text-[6rem] font-sans font-bold leading-[1.05] tracking-tight text-[#AEA28F]"
+            className="font-sans font-bold leading-[1.05] tracking-tight text-[#AEA28F]"
+            style={{ fontSize: "clamp(2rem, 8vw, 6rem)" }}
           >
             Over <span className="text-[#7d0c1a]">a decade</span> of experience in interactive design and working with some of the most talented people in the business
           </p>

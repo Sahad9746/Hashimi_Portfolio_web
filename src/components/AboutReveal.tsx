@@ -64,7 +64,8 @@ export default function AboutReveal() {
         </span>
         <TextFillReveal>
           <p
-            className="text-[2.5rem] md:text-[5rem] lg:text-[6rem] font-sans font-bold leading-[1.05] tracking-tight text-[#AEA28F]"
+            className="font-sans font-bold leading-[1.05] tracking-tight text-[#AEA28F]"
+            style={{ fontSize: "clamp(2rem, 8vw, 6rem)" }}
           >
             I&apos;m a{" "}
             <span className="text-[#7d0c1a]">selectively skilled</span>{" "}

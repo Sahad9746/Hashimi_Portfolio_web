@@ -21,7 +21,8 @@ export default function MottoReveal() {
         
         <TextFillReveal>
           <p
-            className="text-[3rem] md:text-[6rem] lg:text-[7.5rem] font-sans font-bold leading-[1.0] tracking-tighter text-[#AEA28F] uppercase"
+            className="font-sans font-bold leading-[1.0] tracking-tighter text-[#AEA28F] uppercase"
+            style={{ fontSize: "clamp(2.5rem, 10vw, 7.5rem)" }}
           >
             FILM IS A<br />
             BATTLEGROUND

@@ -136,14 +136,17 @@ export default function Home() {
               <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
                 HASHMI
               </span>
-              <h1 className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[9.05rem] text-[#AEA28F]">
+              <h1 
+                className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[#AEA28F]"
+                style={{ fontSize: "clamp(3.5rem, 12vw, 9.05rem)" }}
+              >
                 MAKING<br />
                 <span className="text-[#7d0c1a]">GOOD</span><br />
                 <span className="text-[#7d0c1a]">SHIT</span><br />
                 SINCE<br />
                 2022
               </h1>
-              <span className="font-sans text-[0.9rem] uppercase tracking-[0.2em] font-medium text-[#AEA28F]/60 mt-12">
+              <span className="font-sans text-[0.9rem] uppercase tracking-[0.2em] font-medium text-[#AEA28F]/60 mt-12 text-center px-4">
                 CINEMATOGRAPHER | EDITOR
               </span>
             </div>
@@ -153,14 +156,17 @@ export default function Home() {
             <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F] mb-[30px]" style={{ fontVariant: "small-caps" }}>
               HASHMI
             </span>
-            <h1 className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-[9.05rem] text-black">
+            <h1 
+              className="text-center font-sans font-bold leading-[0.90] tracking-normal uppercase text-black"
+              style={{ fontSize: "clamp(3.5rem, 12vw, 9.05rem)" }}
+            >
               HIDING<br />
               <span className="text-black">BAD</span><br />
               <span className="text-black">SHIT</span><br />
               SINCE<br />
               2022
             </h1>
-            <span className="font-sans text-[0.9rem] uppercase tracking-[0.2em] font-medium text-black/60 mt-12">
+            <span className="font-sans text-[0.9rem] uppercase tracking-[0.2em] font-medium text-black/60 mt-12 text-center px-4">
               CINEMATOGRAPHER | EDITOR
             </span>
           </div>
@@ -260,7 +266,8 @@ export default function Home() {
               <a 
                 key={item} 
                 href="#" 
-                className="font-sans text-6xl md:text-[5rem] font-medium tracking-normal text-[#dcd4c4] hover:text-[#7d0c1a] transition-colors leading-[1.05] md:leading-[1.1]"
+                className="font-sans font-medium tracking-normal text-[#dcd4c4] hover:text-[#7d0c1a] transition-colors leading-[1.05] md:leading-[1.1]"
+                style={{ fontSize: "clamp(2.5rem, 8vw, 6rem)" }}
               >
                 {item}
               </a>
