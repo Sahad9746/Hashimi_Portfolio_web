@@ -68,10 +68,6 @@
   }
 
   /* Split type setup */
-  .line {
-    overflow: hidden;
-  }
-
   .word, .char {
     display: inline-block;
   }

@@ -54,6 +54,10 @@ export default function TextFillReveal({
         char.style.webkitBackgroundClip = forceColor ? "none" : "text";
         char.style.backgroundClip = forceColor ? "none" : "text";
         char.style.color = forceColor || "transparent";
+
+        // Add a tiny bit of padding bottom to ensure descenders (like y, p) aren't clipped
+        // by the background-clip box. No negative margins, so lines won't crash!
+        char.style.paddingBottom = "0.1em";
       });
 
       // Animate the --fill percentage from 0% to 100% for each character sequentially

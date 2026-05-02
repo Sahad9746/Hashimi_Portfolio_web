@@ -9,6 +9,8 @@ import AboutReveal from "@/components/AboutReveal";
 import TextFillReveal from "@/components/TextFillReveal";
 import ExperienceReveal from "@/components/ExperienceReveal";
 import ProjectReveal from "@/components/ProjectReveal";
+import TestimonialsReveal from "@/components/TestimonialsReveal";
+import MottoReveal from "@/components/MottoReveal";
 
 
 export default function Home() {
@@ -34,6 +36,27 @@ export default function Home() {
       gsap.to("#bg-experience", {
         scrollTrigger: {
           trigger: "#experience-trigger",
+          start: "top 80%",
+          end: "top 20%",
+          scrub: true,
+        },
+        opacity: 1,
+      });
+
+      // When we hit the Motto section, fade from BG2 to BG3
+      gsap.to("#bg-experience", {
+        scrollTrigger: {
+          trigger: "#motto-trigger",
+          start: "top 80%",
+          end: "top 20%",
+          scrub: true,
+        },
+        opacity: 0,
+      });
+
+      gsap.to("#bg-motto", {
+        scrollTrigger: {
+          trigger: "#motto-trigger",
           start: "top 80%",
           end: "top 20%",
           scrub: true,
@@ -83,6 +106,17 @@ export default function Home() {
           <Image
             src="/assets/dp2.jpg"
             alt="Experience Background"
+            fill
+            className="object-cover grayscale opacity-60"
+          />
+          <div className="absolute inset-0 bg-[#111]/40 mix-blend-multiply" />
+        </div>
+
+        {/* Background 3: Motto */}
+        <div id="bg-motto" className="absolute inset-0 opacity-0 transition-opacity">
+          <Image
+            src="/assets/dp3.jpg"
+            alt="Motto Background"
             fill
             className="object-cover grayscale opacity-60"
           />
@@ -171,7 +205,7 @@ export default function Home() {
                       forceColor={hoveredServiceIndex === i ? "black" : undefined}
                     >
                       <h2 
-                        className={`font-sans font-bold leading-[0.85] tracking-tighter uppercase transition-colors duration-300 delay-100 ${
+                        className={`font-sans font-bold leading-[1.0] tracking-tighter uppercase transition-colors duration-300 delay-100 ${
                           hoveredServiceIndex === i ? "text-black" : "text-[#AEA28F]"
                         }`} 
                         style={{ fontSize: "clamp(2rem, 6vw, 6.5rem)" }}
@@ -206,29 +240,29 @@ export default function Home() {
       {/* NEW LAYER: Project Section */}
       <ProjectReveal />
 
-      {/* Layer 4: Solid Bottom Section (Covers Experience BG) */}
-      <div className="relative z-20 bg-[#111] w-full pt-32 pb-48">
+      {/* Testimonials Section */}
+      <TestimonialsReveal />
 
+      {/* NEW LAYER: Motto Section (Transparent Background, reveals BG 3) */}
+      <div id="motto-trigger" className="relative z-10 w-full min-h-screen flex items-center justify-center">
+        <MottoReveal />
+      </div>
 
-
-
-
-
+      {/* Layer 4: Solid Bottom Section (Covers Motto BG) */}
+      <div className="relative z-20 bg-[#111] w-full pt-24 pb-32 md:pt-32 md:pb-40">
         {/* Connect Section (Footer) */}
-
-        <section className="mt-48 pt-16 border-t border-[#AEA28F]/30 separator flex flex-col md:flex-row justify-between items-start gap-16 pb-16 max-w-[1300px] mx-auto px-4 md:px-8 lg:px-16 w-full">
-          <div>
-            <h2 className="font-sans text-xs md:text-sm uppercase tracking-widest font-medium text-[#AEA28F]/60 mb-16">Connect</h2>
-            <h2 className="font-serif text-6xl md:text-8xl tracking-tighter uppercase leading-none hover:text-[#7d0c1a] transition-colors cursor-pointer">
-              HELLO@HASHIMI.STUDIO
-            </h2>
-            <p className="mt-8 font-sans text-sm uppercase tracking-widest opacity-50">+84 366 138 837</p>
-          </div>
-          <div className="flex flex-col gap-4 font-sans text-xs md:text-sm uppercase tracking-widest">
-            {["Dribbble", "YouTube", "LinkedIn", "Instagram"].map((social) => (
-              <a key={social} href="#" className="hover:text-[#7d0c1a] transition-colors flex justify-between gap-8 border-b border-[#AEA28F]/20 pb-4">
-                <span>{social}</span>
-                <span className="opacity-50">Follow me</span>
+        <section className="flex flex-col items-center justify-center w-full">
+          <h2 className="font-sans text-xs md:text-sm uppercase tracking-[0.8em] md:tracking-[1em] font-medium text-[#AEA28F]/50 mb-10 md:mb-14 ml-[0.8em] md:ml-[1em]">
+            CONNECT
+          </h2>
+          <div className="flex flex-col items-center">
+            {["mail", "linkedin", "Instagram", "phone"].map((item) => (
+              <a 
+                key={item} 
+                href="#" 
+                className="font-sans text-6xl md:text-[5rem] font-medium tracking-normal text-[#dcd4c4] hover:text-[#7d0c1a] transition-colors leading-[1.05] md:leading-[1.1]"
+              >
+                {item}
               </a>
             ))}
           </div>
