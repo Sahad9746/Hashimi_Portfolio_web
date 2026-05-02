@@ -8,7 +8,7 @@ import { MaskContainer } from "@/components/ui/svg-mask-effect";
 import AboutReveal from "@/components/AboutReveal";
 import TextFillReveal from "@/components/TextFillReveal";
 import ExperienceReveal from "@/components/ExperienceReveal";
-import ProjectReveal from "@/components/ProjectReveal";
+import ReelCollection from "@/components/ReelCollection";
 import TestimonialsReveal from "@/components/TestimonialsReveal";
 import MottoReveal from "@/components/MottoReveal";
 
@@ -200,8 +200,8 @@ export default function HomePageClient({ hero, services, projects, testimonials,
         <ExperienceReveal globalConfig={globalConfig} />
       </div>
 
-      {/* NEW LAYER: Project Section */}
-      <ProjectReveal projects={projects} />
+      {/* NEW LAYER: Reel Collection (Horizontal Scroll) */}
+      <ReelCollection projects={projects} />
 
       {/* Testimonials Section */}
       <TestimonialsReveal testimonials={testimonials} />

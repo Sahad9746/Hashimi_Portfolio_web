@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,7 +11,11 @@ export default function LenisProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  
   useEffect(() => {
+    if (pathname?.startsWith("/studio")) return;
+    
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({

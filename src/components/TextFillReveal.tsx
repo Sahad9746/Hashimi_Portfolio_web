@@ -28,6 +28,9 @@ export default function TextFillReveal({
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Guard against SSR
+    if (typeof window === 'undefined') return;
+    
     gsap.registerPlugin(ScrollTrigger);
 
     if (!textRef.current) return;

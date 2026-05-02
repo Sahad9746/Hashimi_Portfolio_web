@@ -26,6 +26,28 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'thumbnail',
+      title: 'Project Thumbnail / Poster',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      description: 'The image shown before the video plays or on the horizontal reel.',
+    }),
+    defineField({
+      name: 'orientation',
+      title: 'Display Orientation',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Horizontal (Landscape)', value: 'horizontal' },
+          { title: 'Vertical (Portrait)', value: 'vertical' },
+        ],
+      },
+      initialValue: 'horizontal',
+      description: 'Choose whether this reel appears as a landscape or portrait card.',
+    }),
+    defineField({
       name: 'isActive',
       title: 'Is Active Feature?',
       type: 'boolean',

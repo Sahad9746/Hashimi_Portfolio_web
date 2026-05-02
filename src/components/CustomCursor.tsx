@@ -12,6 +12,9 @@ export default function CustomCursor() {
   if (pathname?.startsWith("/studio")) return null;
 
   useEffect(() => {
+    // Guard against SSR
+    if (typeof window === 'undefined') return;
+    
     const cursor = cursorRef.current;
     if (!cursor) return;
 
