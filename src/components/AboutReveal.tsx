@@ -101,9 +101,15 @@ export default function AboutReveal({ globalConfig }: { globalConfig?: any }) {
           <span className="font-sans text-[1.2rem] uppercase tracking-[0.4em] font-medium block mb-6 opacity-0">
             About Me
           </span>
-          <p className="text-[2.5rem] md:text-[5rem] lg:text-[6rem] font-sans font-bold leading-[1.05] tracking-tight text-black">
-            {altText}
-          </p>
+          {/* Ensure the wrapper structure and font sizes match the primary text exactly */}
+          <div className="w-full">
+            <p 
+              className="font-sans font-bold leading-[1.05] tracking-tight text-black"
+              style={{ fontSize: "clamp(2rem, 8vw, 6rem)" }}
+            >
+              {altText}
+            </p>
+          </div>
         </div>
       </div>
     </section>
