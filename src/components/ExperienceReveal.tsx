@@ -9,6 +9,7 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
 
   const [isHovered, setIsHovered] = useState(false);
   const [isWithinSection, setIsWithinSection] = useState(false);
+  const [maskCenter, setMaskCenter] = useState({ x: 0, y: 0 });
 
   const revealSize = 450;
   const idleSize = 40;
@@ -23,13 +24,14 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
       const rect = section.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+      
       xRayRef.current.style.setProperty("--mouse-x", `${x}px`);
       xRayRef.current.style.setProperty("--mouse-y", `${y}px`);
     };
 
     section.addEventListener("mousemove", handleMouseMove);
     return () => section.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, []); // Empty dependency array to prevent stuttering re-renders
 
   const altText =
     "I've spent a minute or two playing with rectangles and convincing people that pixels actually matter.";
@@ -72,7 +74,7 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
       {/* X-ray mask layer */}
       <div
         ref={xRayRef}
-        className="absolute inset-0 z-20 flex items-center justify-center bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
+        className="absolute inset-0 z-[25] flex items-center justify-center bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
         style={{
           visibility: isWithinSection ? "visible" : "hidden",
           opacity: isWithinSection ? 1 : 0,

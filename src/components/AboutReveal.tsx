@@ -13,6 +13,7 @@ export default function AboutReveal({ globalConfig }: { globalConfig?: any }) {
 
   const [isHovered, setIsHovered] = useState(false);
   const [isWithinSection, setIsWithinSection] = useState(false);
+  const [maskCenter, setMaskCenter] = useState({ x: 0, y: 0 });
 
   const rawText = globalConfig?.aboutText || "I'M A CREATIVE WHO THRIVES IN THE *CHAOS* OF PRODUCTION. WHETHER IT'S CAPTURING RAW EMOTION THROUGH A LENS OR STITCHING SCENES TOGETHER IN POST, I DON'T JUST TELL STORIES—I *ENGINEER* THEM.";
   
@@ -33,13 +34,20 @@ export default function AboutReveal({ globalConfig }: { globalConfig?: any }) {
       const rect = section.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+      
+      // Always update mouse position for tracking
       xRayRef.current.style.setProperty("--mouse-x", `${x}px`);
       xRayRef.current.style.setProperty("--mouse-y", `${y}px`);
+      
+      // Lock the center when not hovered (so expansion happens from this point)
+      if (!isHovered) {
+        setMaskCenter({ x, y });
+      }
     };
 
     section.addEventListener("mousemove", handleMouseMove);
     return () => section.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isHovered]);
 
   // The sweeping text fill effect is now handled completely by the imported <TextFillReveal> component.
   // We only track the mouse here for the x-ray mask effect.

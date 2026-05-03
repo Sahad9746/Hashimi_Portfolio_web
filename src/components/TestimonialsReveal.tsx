@@ -14,6 +14,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
   const xRayRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isWithinSection, setIsWithinSection] = useState(false);
+  const [maskCenter, setMaskCenter] = useState({ x: 0, y: 0 });
 
   // Fallback if DB is empty
   const testimonials = sanityTestimonials?.length ? sanityTestimonials : [
@@ -54,13 +55,20 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
       const rect = section.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+      
+      // Always update mouse position for tracking
       xRayRef.current.style.setProperty("--mouse-x", `${x}px`);
       xRayRef.current.style.setProperty("--mouse-y", `${y}px`);
+      
+      // Lock the center when not hovered (so expansion happens from this point)
+      if (!isHovered) {
+        setMaskCenter({ x, y });
+      }
     };
 
     section.addEventListener("mousemove", handleMouseMove);
     return () => section.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isHovered]);
 
   const getAltQuote = (index: number) => {
     const altQuotes = [
@@ -138,7 +146,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
   return (
     <section 
       ref={sectionRef} 
-      className="relative w-full bg-[#111] z-20"
+      className="relative w-full bg-[#111] z-20 overflow-hidden"
       onMouseEnter={() => setIsWithinSection(true)}
       onMouseLeave={() => setIsWithinSection(false)}
     >
@@ -203,6 +211,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
         className="relative z-10"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        data-cursor-hide="true"
       >
         {/* Section label */}
         <div className="max-w-[1300px] mx-auto px-4 md:px-8 lg:px-16 w-full" style={{ paddingTop: "14.880952381vh" }}>
@@ -275,7 +284,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
       {/* X-ray Mask Layer (Reveals Alternative Truths) */}
       <div
         ref={xRayRef}
-        className="absolute inset-0 z-20 bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
+        className="absolute inset-0 z-[25] bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
         style={{
           visibility: isWithinSection ? "visible" : "hidden",
           opacity: isWithinSection ? 1 : 0,
