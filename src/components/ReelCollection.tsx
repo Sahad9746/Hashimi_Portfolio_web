@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
@@ -66,7 +67,7 @@ const ReelCard = ({
       {poster && (
         <Image
           src={poster}
-          alt={title}
+          alt={title || "Project Reel"}
           fill
           className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
         />
@@ -170,10 +171,23 @@ export default function ReelCollection({ projects: sanityProjects }: { projects?
     >
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col pt-32">
         <div className="px-6 md:px-12 mb-12">
-          <h2 className="text-4xl md:text-6xl font-sans font-bold text-[#AEA28F] mb-4">REEL COLLECTION</h2>
-          <p className="text-[#AEA28F]/60 max-w-md uppercase tracking-widest text-sm">
-            A curated selection of our finest frames and cinematic narratives.
-          </p>
+          <h2 className="text-4xl md:text-6xl font-sans font-bold text-[#AEA28F] mb-4 uppercase tracking-tighter">REEL COLLECTION</h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <p className="text-[#AEA28F]/60 max-w-md uppercase tracking-widest text-sm leading-relaxed">
+              A curated selection of our finest frames and cinematic narratives.
+            </p>
+            <Link 
+              href="/work"
+              className="group flex items-center gap-4 font-antonio font-light text-[1rem] uppercase tracking-[0.3em] text-white hover:text-[#7d0c1a] transition-all duration-300"
+            >
+              <span>View All Work</span>
+              <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#7d0c1a] group-hover:bg-[#7d0c1a] transition-all duration-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5 -rotate-45 group-hover:rotate-0 transition-transform duration-300">
+                  <path d="M5 12h14m-7-7l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </Link>
+          </div>
         </div>
 
         <motion.div
@@ -192,13 +206,13 @@ export default function ReelCollection({ projects: sanityProjects }: { projects?
           ))}
           
           {/* View Archive Link */}
-          <div className="flex-shrink-0 w-[350px] md:w-[600px] h-full flex flex-col items-center justify-center border-l border-white/10 px-12 text-center group">
-             <div className="w-24 h-24 rounded-full border border-[#AEA28F]/30 flex items-center justify-center group-hover:bg-[#AEA28F] group-hover:text-black transition-all duration-500 mb-6">
-                <Play className="w-10 h-10 ml-1" />
+          <Link href="/work" className="flex-shrink-0 w-[350px] md:w-[600px] h-full flex flex-col items-center justify-center border-l border-white/10 px-12 text-center group">
+             <div className="w-24 h-24 rounded-full border border-[#AEA28F]/30 flex items-center justify-center group-hover:bg-[#7d0c1a] group-hover:border-[#7d0c1a] group-hover:text-white transition-all duration-500 mb-6">
+                <Play className="w-10 h-10 ml-1 fill-current" />
              </div>
              <h3 className="text-3xl font-bold text-white mb-2 uppercase tracking-tighter">View Full Archive</h3>
              <p className="text-[#AEA28F]/50 text-sm uppercase tracking-widest">Explore all work</p>
-          </div>
+          </Link>
         </motion.div>
       </div>
     </section>
