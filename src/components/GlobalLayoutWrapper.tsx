@@ -20,7 +20,7 @@ export default function GlobalLayoutWrapper({ children }: { children: React.Reac
   if (isStudio) return <>{children}</>;
 
   return (
-    <div className={cn(!isStudio && "cursor-none")}>
+    <div>
       <CustomCursor />
       {/* Navigation positioned via vh */}
       <nav 

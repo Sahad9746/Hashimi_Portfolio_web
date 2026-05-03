@@ -21,8 +21,8 @@ export default function CustomCursor() {
     // Centered tracking setup
     gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3.out" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3.out" });
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.05, ease: "power3.out" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.05, ease: "power3.out" });
 
     const onMouseMove = (e: MouseEvent) => {
       xTo(e.clientX);
