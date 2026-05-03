@@ -50,7 +50,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-[50px] h-[50px] bg-[#7d0c1a] pointer-events-none z-[9999] overflow-hidden"
+      className="fixed top-0 left-0 w-[50px] h-[50px] bg-[#7d0c1a] pointer-events-none z-40 overflow-hidden"
       style={{ borderRadius: "50%" }}
     />
   );

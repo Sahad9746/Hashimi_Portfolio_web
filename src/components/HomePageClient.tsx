@@ -84,7 +84,7 @@ export default function HomePageClient({ hero, services, projects, testimonials,
       </div>
 
       {/* Layer 1: Hero Content */}
-      <div className="relative w-full h-screen z-10 flex flex-col justify-center items-center">
+      <div id="hero" className="relative w-full h-screen z-10 flex flex-col justify-center items-center">
         <MaskContainer
           size={40}
           revealSize={450}
@@ -135,7 +135,7 @@ export default function HomePageClient({ hero, services, projects, testimonials,
       </div>
 
       {/* Layer 2: Solid Middle Section (Covers Hero BG, revealed Experience BG) */}
-      <div className="relative z-20 bg-[#111] w-full pt-20">
+      <div id="about" className="relative z-20 bg-[#111] w-full pt-20">
         <AboutReveal globalConfig={globalConfig} />
 
         {/* What I Do Section */}
@@ -201,7 +201,9 @@ export default function HomePageClient({ hero, services, projects, testimonials,
       </div>
 
       {/* NEW LAYER: Reel Collection (Horizontal Scroll) */}
-      <ReelCollection projects={projects} />
+      <div id="work">
+        <ReelCollection projects={projects} />
+      </div>
 
       {/* Testimonials Section */}
       <TestimonialsReveal testimonials={testimonials} />
@@ -212,7 +214,7 @@ export default function HomePageClient({ hero, services, projects, testimonials,
       </div>
 
       {/* Layer 4: Solid Bottom Section (Covers Motto BG) */}
-      <div className="relative z-20 bg-[#111] w-full pt-24 pb-32 md:pt-32 md:pb-40">
+      <div id="contact" className="relative z-20 bg-[#111] w-full pt-24 pb-32 md:pt-32 md:pb-40">
         {/* Connect Section (Footer) */}
         <section className="flex flex-col items-center justify-center w-full">
           <h2 className="font-sans text-xs md:text-sm uppercase tracking-[0.8em] md:tracking-[1em] font-medium text-[#AEA28F]/50 mb-10 md:mb-14 ml-[0.8em] md:ml-[1em]">
