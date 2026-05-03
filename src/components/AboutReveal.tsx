@@ -106,8 +106,10 @@ export default function AboutReveal({ globalConfig }: { globalConfig?: any }) {
           WebkitMaskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",
           maskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",
           "--mask-size": `${maskSize}px`,
-          transition: "mask-size 0.3s ease-out, -webkit-mask-size 0.3s ease-out, opacity 0.3s ease-out",
+          transition: "mask-size 0.3s cubic-bezier(0.25, 1, 0.5, 1), -webkit-mask-size 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease-out",
           pointerEvents: "none",
+          willChange: "mask-size, -webkit-mask-size, mask-position, -webkit-mask-position",
+          transform: "translate3d(0,0,0)",
         } as any}
       >
         {/* Identical layout structure so alternate text aligns perfectly */}
