@@ -13,7 +13,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
   const [showCircles, setShowCircles] = useState(false);
   const xRayRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [isWithinSection, setIsWithinSection] = useState(false);
+  const [isWithinTestimonialSection, setIsWithinTestimonialSection] = useState(false);
   const [maskCenter, setMaskCenter] = useState({ x: 0, y: 0 });
 
   // Fallback if DB is empty
@@ -147,8 +147,8 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
     <section 
       ref={sectionRef} 
       className="relative w-full bg-[#111] z-20 overflow-hidden"
-      onMouseEnter={() => setIsWithinSection(true)}
-      onMouseLeave={() => setIsWithinSection(false)}
+      onMouseEnter={() => setIsWithinTestimonialSection(true)}
+      onMouseLeave={() => setIsWithinTestimonialSection(false)}
     >
       {/* Fixed circles - always centered in viewport */}
       <div
@@ -286,8 +286,8 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
         ref={xRayRef}
         className="absolute inset-0 z-[25] bg-[#7d0c1a] [mask-image:url(/mask.svg)] [mask-repeat:no-repeat] [-webkit-mask-image:url(/mask.svg)] [-webkit-mask-repeat:no-repeat]"
         style={{
-          visibility: isWithinSection ? "visible" : "hidden",
-          opacity: isWithinSection ? 1 : 0,
+          visibility: isWithinTestimonialSection ? "visible" : "hidden",
+          opacity: isWithinTestimonialSection ? 1 : 0,
           WebkitMaskSize: `${maskSize}px`,
           maskSize: `${maskSize}px`,
           WebkitMaskPosition: "calc(var(--mouse-x, -9999px) - var(--mask-size, 0px) / 2) calc(var(--mouse-y, -9999px) - var(--mask-size, 0px) / 2)",

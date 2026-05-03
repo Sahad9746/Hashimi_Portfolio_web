@@ -9,14 +9,13 @@ import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function GlobalLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [hasMounted, setHasMounted] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     setHasMounted(true);
   }, []);
 

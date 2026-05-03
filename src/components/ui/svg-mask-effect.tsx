@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const MaskContainer = ({
@@ -38,7 +38,7 @@ export const MaskContainer = ({
     return () => {
       container.removeEventListener("mousemove", updateMousePosition);
     };
-  }, []);
+  }, [isHovered]); // Added dependency to match browser expectation and prevent size mismatch
   
   let maskSize = isHovered ? revealSize : size;
 
