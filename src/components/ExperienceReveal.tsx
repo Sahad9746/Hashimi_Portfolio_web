@@ -10,12 +10,18 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
   const [isHovered, setIsHovered] = useState(false);
   const [isWithinSection, setIsWithinSection] = useState(false);
   const [maskCenter, setMaskCenter] = useState({ x: 0, y: 0 });
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, [isMounted]);
 
   const revealSize = 450;
   const idleSize = 40;
   const maskSize = isHovered ? revealSize : idleSize;
 
   useEffect(() => {
+    if (!isMounted) return;
     const section = sectionRef.current;
     if (!section) return;
 
@@ -31,7 +37,7 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
 
     section.addEventListener("mousemove", handleMouseMove);
     return () => section.removeEventListener("mousemove", handleMouseMove);
-  }, []); // Empty dependency array to prevent stuttering re-renders
+  }, [isMounted]);
 
   const altText =
     "I've spent a minute or two playing with rectangles and convincing people that pixels actually matter.";
@@ -40,7 +46,7 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
     <div
       ref={sectionRef}
       id="experience-reveal"
-      className="relative w-full h-[150vh] flex items-center justify-center pointer-events-none"
+      className="relative w-full h-[150vh] flex items-center justify-center"
       onMouseEnter={() => setIsWithinSection(true)}
       onMouseLeave={() => setIsWithinSection(false)}
     >

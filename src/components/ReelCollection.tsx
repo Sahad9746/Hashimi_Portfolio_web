@@ -112,6 +112,11 @@ const ReelCard = ({
 
 export default function ReelCollection({ projects: sanityProjects }: { projects?: Reel[] }) {
   const horizontalRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: horizontalRef,
@@ -144,6 +149,18 @@ export default function ReelCollection({ projects: sanityProjects }: { projects?
       poster: "/assets/dp3.jpg",
     },
   ];
+
+  if (!isMounted) {
+    return (
+      <section ref={horizontalRef} className="relative h-[120vh] bg-[#111] z-20">
+        <div className="sticky top-0 h-screen overflow-hidden flex flex-col pt-32">
+          <div className="px-6 md:px-12 mb-12">
+            <h2 className="text-4xl md:text-6xl font-sans font-bold text-[#AEA28F] mb-4">REEL COLLECTION</h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

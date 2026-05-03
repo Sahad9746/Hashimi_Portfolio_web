@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
@@ -26,19 +26,27 @@ export default function TextFillReveal({
   forceColor
 }: TextFillRevealProps) {
   const textRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // Guard against SSR
-    if (typeof window === 'undefined') return;
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || !textRef.current) return;
     
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!textRef.current) return;
-
-    // Split text into individual characters while preserving nested DOM structures (like colored spans)
-    const split = new SplitType(textRef.current, {
-      types: "chars",
-    });
+    let split: SplitType | null = null;
+    try {
+      // Split text into individual characters while preserving nested DOM structures
+      split = new SplitType(textRef.current, {
+        types: "chars",
+      });
+    } catch (e) {
+      console.error("SplitType failed:", e);
+      return;
+    }
 
     const chars = split.chars;
     if (!chars || chars.length === 0) return;
@@ -58,17 +66,16 @@ export default function TextFillReveal({
         char.style.backgroundClip = forceColor ? "none" : "text";
         char.style.color = forceColor || "transparent";
 
-        // Add a tiny bit of padding bottom to ensure descenders (like y, p) aren't clipped
-        // by the background-clip box. No negative margins, so lines won't crash!
+        // Add a tiny bit of padding bottom to ensure descenders aren't clipped
         char.style.paddingBottom = "0.1em";
       });
 
-      // Animate the --fill percentage from 0% to 100% for each character sequentially
+      // Animate the --fill percentage
       gsap.to(chars, {
         "--fill": "100%",
         ease: "none", 
         stagger: stagger, 
-        duration: stagger, // Exactly matches stagger to prevent multi-character overlap
+        duration: stagger,
         scrollTrigger: {
           trigger: textRef.current,
           start: start, 
@@ -80,9 +87,9 @@ export default function TextFillReveal({
 
     return () => {
       ctx.revert();
-      split.revert();
+      if (split) split.revert();
     };
-  }, [start, end, darkColor, stagger, forceColor]);
+  }, [isMounted, start, end, darkColor, stagger, forceColor]);
 
   return (
     <div ref={textRef} className={cn("", className)}>

@@ -15,6 +15,11 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
   const [isHovered, setIsHovered] = useState(false);
   const [isWithinTestimonialSection, setIsWithinTestimonialSection] = useState(false);
   const [maskCenter, setMaskCenter] = useState({ x: 0, y: 0 });
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fallback if DB is empty
   const testimonials = sanityTestimonials?.length ? sanityTestimonials : [
@@ -47,6 +52,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
 
   // Track mouse using CSS variables
   useEffect(() => {
+    if (!isMounted) return;
     const section = sectionRef.current;
     if (!section) return;
 
@@ -80,6 +86,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
   };
 
   useEffect(() => {
+    if (!isMounted) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
@@ -141,7 +148,19 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return (
+      <section ref={sectionRef} className="relative w-full bg-[#111] z-20 overflow-hidden min-h-screen">
+        <div className="max-w-[1300px] mx-auto px-4 md:px-8 lg:px-16 w-full" style={{ paddingTop: "14.880952381vh" }}>
+           <span className="font-sans text-[0.75rem] uppercase tracking-[0.4em] font-medium text-[#AEA28F]/50 block mb-8">
+              What They Said
+           </span>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 

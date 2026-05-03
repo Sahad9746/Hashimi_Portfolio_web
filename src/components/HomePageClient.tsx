@@ -16,6 +16,11 @@ import MottoReveal from "@/components/MottoReveal";
 export default function HomePageClient({ hero, services, projects, testimonials, globalConfig }: any) {
   const container = useRef<HTMLDivElement>(null);
   const [hoveredServiceIndex, setHoveredServiceIndex] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Fallbacks for empty database
   const safeServices = services?.length > 0 ? services : [
@@ -28,6 +33,7 @@ export default function HomePageClient({ hero, services, projects, testimonials,
   const heroBottomLabel = hero?.bottomLabel || "CINEMATOGRAPHER | EDITOR";
 
   useEffect(() => {
+    if (!isMounted) return;
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
@@ -62,7 +68,7 @@ export default function HomePageClient({ hero, services, projects, testimonials,
     }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]);
 
   return (
     <main ref={container} className="w-full bg-[#111] overflow-x-hidden">
