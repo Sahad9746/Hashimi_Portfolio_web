@@ -74,7 +74,7 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
 
     section.addEventListener("mousemove", handleMouseMove);
     return () => section.removeEventListener("mousemove", handleMouseMove);
-  }, [isHovered]);
+  }, [isHovered, isMounted]);
 
   const getAltQuote = (index: number) => {
     const altQuotes = [

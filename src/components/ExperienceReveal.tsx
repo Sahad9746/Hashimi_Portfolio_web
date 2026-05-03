@@ -14,7 +14,7 @@ export default function ExperienceReveal({ globalConfig }: { globalConfig?: any 
 
   useEffect(() => {
     setIsMounted(true);
-  }, [isMounted]);
+  }, []);
 
   const revealSize = 450;
   const idleSize = 40;

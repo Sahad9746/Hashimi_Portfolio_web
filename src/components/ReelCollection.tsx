@@ -12,6 +12,7 @@ interface Reel {
   category?: string;
   videoUrl?: string;
   videoFileUrl?: string;
+  poster?: string;
   thumbnail?: any;
   orientation?: "horizontal" | "vertical";
 }
@@ -126,7 +127,7 @@ export default function ReelCollection({ projects: sanityProjects }: { projects?
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 
   // Fallback data if Sanity is empty
-  const projects = sanityProjects?.length ? sanityProjects : [
+  const projects: Reel[] = sanityProjects?.length ? sanityProjects : [
     {
       title: "Neon Nights",
       category: "Automotive",
@@ -148,7 +149,7 @@ export default function ReelCollection({ projects: sanityProjects }: { projects?
       videoUrl: "/assets/linde-event-day01.mp4",
       poster: "/assets/dp3.jpg",
     },
-  ];
+  ] as Reel[];
 
   if (!isMounted) {
     return (
