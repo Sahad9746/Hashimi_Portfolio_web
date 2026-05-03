@@ -225,11 +225,8 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
         })}
       </div>
 
-      {/* Primary Content Layer */}
       <div 
         className="relative z-10"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         data-cursor-hide="true"
       >
         {/* Section label */}
@@ -242,9 +239,13 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div ref={testimonialsStartRef} className="max-w-[1300px] mx-auto px-4 md:px-8 lg:px-16 w-full">
-          <div className="w-full md:w-[70%] lg:w-[65%]">
+        <div 
+          ref={testimonialsStartRef} 
+          className="max-w-[1300px] mx-auto px-4 md:px-8 lg:px-16 w-full"
+        >
+          <div 
+            className="w-full md:w-[70%] lg:w-[65%]"
+          >
             {testimonials.map((t, i) => (
               <div
                 key={i}
@@ -256,7 +257,11 @@ export default function TestimonialsReveal({ testimonials: sanityTestimonials }:
                 }}
               >
                 <div className="w-full">
-                  <div className="quote-text flex items-start gap-2">
+                  <div 
+                    className="quote-text flex items-start gap-2"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
                     <span
                       className="font-sans font-bold text-[#7d0c1a] leading-none select-none flex-shrink-0"
                       style={{ fontSize: "clamp(3rem, 6vw, 5rem)", marginTop: "-0.1em" }}
